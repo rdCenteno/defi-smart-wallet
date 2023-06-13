@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import "./libraries/TransferHelper.sol";
 
-contract Contract {
+contract SmartWallet {
     event Deposit(address indexed sender, uint amount, uint balance);
     event Withdraw(address owner, uint256 amount, uint balance);
     event ExecuteTransactions(address indexed executor, uint256 amount);
@@ -11,7 +11,7 @@ contract Contract {
     address owner;
 
     modifier onlyOwner {
-        require(owner == msg.sender, "Contract: caller is not the owner");
+        require(owner == msg.sender, "SmartWallet: caller is not the owner");
         _;
     }
 
@@ -20,10 +20,10 @@ contract Contract {
     }
 
     function executeTransactions(address[] memory _targets, bytes[] memory _data, uint256[] memory _values) external payable onlyOwner {
-        require(_targets.length == _data.length, "Contract: invalid data parameters");
+        require(_targets.length == _data.length, "SmartWallet: invalid data parameters");
         for(uint i; i < _targets.length; i++) {
             (bool success, ) = _targets[i].call{value: _values[i]}(_data[i]);
-            require(success, "Contract: tx failed");
+            require(success, "SmartWallet: tx failed");
         }
         emit ExecuteTransactions(msg.sender, _targets.length);
     }

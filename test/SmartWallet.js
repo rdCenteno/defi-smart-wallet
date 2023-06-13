@@ -6,12 +6,9 @@ describe("Contract", function () {
     beforeEach(async () => {
         [owner, addr1] = await ethers.getSigners();
 
-        const Contract = await ethers.getContractFactory("Contract");
-        contract = await Contract.deploy(addr1.address);
-        await contract.deployed();
-
-        //signer = await ethers.getImpersonatedSigner(ADDRESS);
-        //tokenContract = await ethers.getContractAt("IERC20", CONTRACT_ADDRESS);
+        const SmartWallet = await ethers.getContractFactory("SmartWallet");
+        smartWallet = await SmartWallet.deploy(addr1.address);
+        await smartWallet.deployed();
     });
 
     describe("Test method", function () {

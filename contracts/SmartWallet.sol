@@ -19,7 +19,7 @@ contract SmartWallet {
         owner = _owner;
     }
 
-    function executeTransactions(address[] memory _targets, bytes[] memory _data, uint256[] memory _values) external payable onlyOwner {
+    function executeTransactions(address[] calldata _targets, bytes[] calldata _data, uint256[] calldata _values) external payable onlyOwner {
         require(_targets.length == _data.length, "SmartWallet: invalid data parameters");
         for(uint i; i < _targets.length; i++) {
             (bool success, ) = _targets[i].call{value: _values[i]}(_data[i]);
